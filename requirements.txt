@@ -1,0 +1,4 @@
+Flask==2.0.1
+scrapy==2.6.1
+tldextract==3.3.0
+gunicorn==20.1.0
