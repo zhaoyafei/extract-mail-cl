@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import os
 import re
 import json
@@ -273,41 +273,45 @@ def extract_email():
 # 主页路由
 @app.route('/')
 def home():
-    return '''
-    <html>
-        <head>
-            <title>Email Extractor API</title>
-            <style>
-                body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-                pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
-                .example { background: #e8f5e9; padding: 10px; border-radius: 5px; margin: 10px 0; }
-            </style>
-        </head>
-        <body>
-            <h1>Email Extractor API</h1>
-            <p>Extract email addresses from websites.</p>
-            
-            <h2>API Usage:</h2>
-            <pre>/api/extract-email?url=example.com</pre>
-            
-            <div class="example">
-                <h3>Example:</h3>
-                <a href="/api/extract-email?url=example.com" target="_blank">/api/extract-email?url=example.com</a>
-            </div>
-            
-            <h2>Response Format:</h2>
-            <pre>{
-    "Email": ["email@example.com", "another@example.com"],
-    "End_Time": "2023-01-01 12:00:00",
-    "Number_Email": 2,
-    "Pages_Visited": 5,
-    "Start_Time": "2023-01-01 11:59:00",
-    "Status": "success",
-    "Time_Usage": 60
-}</pre>
-        </body>
-    </html>
-    '''
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        # 如果模板不存在，返回API信息页面
+        return '''
+        <html>
+            <head>
+                <title>Email Extractor API</title>
+                <style>
+                    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+                    pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+                    .example { background: #e8f5e9; padding: 10px; border-radius: 5px; margin: 10px 0; }
+                </style>
+            </head>
+            <body>
+                <h1>Email Extractor API</h1>
+                <p>Extract email addresses from websites.</p>
+                
+                <h2>API Usage:</h2>
+                <pre>/api/extract-email?url=example.com</pre>
+                
+                <div class="example">
+                    <h3>Example:</h3>
+                    <a href="/api/extract-email?url=example.com" target="_blank">/api/extract-email?url=example.com</a>
+                </div>
+                
+                <h2>Response Format:</h2>
+                <pre>{
+        "Email": ["email@example.com", "another@example.com"],
+        "End_Time": "2023-01-01 12:00:00",
+        "Number_Email": 2,
+        "Pages_Visited": 5,
+        "Start_Time": "2023-01-01 11:59:00",
+        "Status": "success",
+        "Time_Usage": 60
+    }</pre>
+            </body>
+        </html>
+        '''
 
 if __name__ == '__main__':
     # 创建默认的爬虫脚本
